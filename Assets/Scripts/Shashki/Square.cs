@@ -9,9 +9,38 @@ public class Square : MonoBehaviour
 
     GameObject[,] squareArray;
 
-    private void OnEnable()
+    [SerializeField]
+    private GameObject players;
+
+    public GameObject selectedFeature;
+
+    private void Start()
     {
+        squareArray = new GameObject[8, 8];
+
         CreateField();
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if ((i + j) % 2 == 0)
+                {
+                    if (squareArray[i, j].GetComponent<Move>().feature != null)
+                    {
+                        squareArray[i, j].GetComponent<Move>().loaded = true;
+                    }
+
+                    else
+                    {
+                        squareArray[i, j].GetComponent<Move>().loaded = false;
+                    }
+                }
+            }
+        }
     }
 
     void CreateField()
@@ -20,10 +49,122 @@ public class Square : MonoBehaviour
         {
             for(int j = 0; j < 8; j++)
             {
-                Vector2 position = new Vector2(i - 2, j);
+                Vector3 position = new Vector3(i - 3f, j -3.8f, -1);
 
-                Instantiate(prefab, position, Quaternion.identity, gameObject.transform);
+                GameObject clone = Instantiate(prefab, position, Quaternion.identity);
+
+                squareArray[i, j] = clone;
+
+                if ((i + j) % 2 == 0)
+                {
+                    clone.AddComponent<Move>();
+
+                    clone.GetComponent<Move>().square = gameObject.GetComponent<Square>();
+
+                    clone.GetComponent<Move>().x = i;
+                    clone.GetComponent<Move>().y = j;
+                }
+            }
+                
+        }
+        CreateDot();
+    }
+
+    void CreateDot()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (i < 1)
+                {
+                    if ((i+j)%2 == 0)
+                    {
+                        Vector3 pos = squareArray[i, j].transform.position;
+
+                        GameObject clone = Instantiate(players, pos, Quaternion.identity);
+
+                        clone.name = "Player";
+
+                        squareArray[i, j].GetComponent<Move>().feature = clone;
+
+                        squareArray[i, j].GetComponent<Move>().loaded = true;
+                    }
+
+                }
             }
         }
     }
+
+    public void WalkController(int I, int J)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (squareArray[i, j].GetComponent<Move>())
+                {
+                    if (!squareArray[i, j].GetComponent<Move>().select)
+                    {
+                        if ((J - j == -1 || J-j == 1))
+                        {
+                            if(I - i == -1)
+                            {
+                                if (!squareArray[i,j].GetComponent<Move>().loaded)
+                                {
+                                    squareArray[i, j].GetComponent<SpriteRenderer>().enabled = true;
+
+                                    squareArray[i, j].GetComponent<Move>().walk = true;
+                                }
+
+                                
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    public void Clear()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (squareArray[i, j].GetComponent<Move>())
+                {
+                    if (!squareArray[i, j].GetComponent<Move>().select)
+                    {
+                        squareArray[i, j].GetComponent<SpriteRenderer>().enabled = false;
+
+                        squareArray[i, j].GetComponent<Move>().walk = false;          
+                    }
+
+                }
+
+            }
+        }
+    }
+
+
+    //public void ClearField()
+    //{
+    //    for (int i = 0; i < 8; i++)
+    //    {
+    //        for (int j = 0; j < 8; j++)
+    //        {
+    //            if (squareArray[i, j].GetComponent<Move>())
+    //            {
+    //                squareArray[i, j].GetComponent<Move>().select = false;
+
+    //                squareArray[i, j].GetComponent<Move>().walk = false;
+    //            }
+
+    //        }
+    //    }
+    //    StepController();
+    //}
 }
