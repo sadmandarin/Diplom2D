@@ -11,7 +11,7 @@ public class Move : MonoBehaviour
     public bool select;
 
     public bool walk;
-
+        
     public bool loaded;
 
     public int x;

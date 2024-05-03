@@ -12,6 +12,9 @@ public class Square : MonoBehaviour
     [SerializeField]
     private GameObject players;
 
+    [SerializeField]
+    private GameObject enemy;
+
     public GameObject selectedFeature;
 
     private void Start()
@@ -64,6 +67,16 @@ public class Square : MonoBehaviour
                     clone.GetComponent<Move>().x = i;
                     clone.GetComponent<Move>().y = j;
                 }
+
+                if (i == 7 && j == 3)
+                {
+                    clone.AddComponent<FeatureEnemyAI>();
+
+                    clone.GetComponent<FeatureEnemyAI>().square = gameObject.GetComponent<Square>();
+
+                    clone.GetComponent<FeatureEnemyAI>().x = i;
+                    clone.GetComponent <FeatureEnemyAI>().y = j;
+                }
             }
                 
         }
@@ -82,7 +95,7 @@ public class Square : MonoBehaviour
                     {
                         Vector3 pos = squareArray[i, j].transform.position;
 
-                        GameObject clone = Instantiate(players, pos, Quaternion.identity);
+                        GameObject clone = Instantiate(players, pos, Quaternion.identity, gameObject.transform);
 
                         clone.name = "Player";
 
@@ -91,6 +104,21 @@ public class Square : MonoBehaviour
                         squareArray[i, j].GetComponent<Move>().loaded = true;
                     }
 
+                }
+
+
+
+                if ((i == 7 && j == 3))
+                {
+                    Vector3 pos = squareArray[i, j].transform.position;
+
+                    GameObject clone = Instantiate(enemy, pos, Quaternion.identity, gameObject.transform);
+
+                    clone.name = "Enemy";
+
+                    squareArray[i, j].GetComponent <FeatureEnemyAI>().feature = clone;
+
+                    squareArray[i, j].GetComponent<FeatureEnemyAI>().loaded = true;
                 }
             }
         }
@@ -116,13 +144,45 @@ public class Square : MonoBehaviour
 
                                     squareArray[i, j].GetComponent<Move>().walk = true;
                                 }
-
-                                
                             }
                         }
                     }
 
                 }
+
+            }
+        }
+    }
+
+    public void WalkEnemyController(int I, int J)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (squareArray[i, j].GetComponent<FeatureEnemyAI>())
+                {
+                    if (squareArray[i, j].GetComponent<Move>())
+                    {
+                        if (!squareArray[i, j].GetComponent<Move>().select)
+                        {
+                            if ((J - j == -1 || J - j == 1))
+                            {
+                                if (I - i == -1 && I - i == 1)
+                                {
+                                    if (!squareArray[i, j].GetComponent<Move>().loaded)
+                                    {
+                                        squareArray[i, j].GetComponent<SpriteRenderer>().enabled = true;
+
+                                        squareArray[i, j].GetComponent<FeatureEnemyAI>().walk = true;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                
 
             }
         }
