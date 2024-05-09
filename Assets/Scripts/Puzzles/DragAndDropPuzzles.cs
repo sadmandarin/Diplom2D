@@ -8,7 +8,7 @@ public class DragAndDropPuzzles : MonoBehaviour
     private bool isDragging = false;
     private Vector3 offset;
 
-
+    public bool IsDragging {  get { return isDragging; } }
     void Update()
     {
         if (isDragging)
@@ -32,12 +32,18 @@ public class DragAndDropPuzzles : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("Триггер сработал с объектом: " + other.gameObject.name);
-
-
         if (other.gameObject.layer == LayerMask.NameToLayer("Target"))
         {
+            Debug.Log("www");
+
             gameObject.transform.position = other.gameObject.transform.position;
+
+            //if (other.gameObject.GetComponent<DetectObject>().IsFilled && isDragging == false)
+            //{
+            //    other.enabled = false;
+
+            //    GetComponent<Collider2D>().enabled = false;
+            //}
         }
     }
 }

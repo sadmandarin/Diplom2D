@@ -26,6 +26,20 @@ public class Test : MonoBehaviour
             }
         }
 
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (active)
+            {
+                Destroy(game);
+
+                active = false;
+
+                game = Instantiate (puzzlePrefab);
+
+                active = true;
+            }
+        }
+
         if (Input.GetKey(KeyCode.P)) 
         {
             if(!active)
