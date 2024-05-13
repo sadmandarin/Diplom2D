@@ -8,14 +8,35 @@ public class Test : MonoBehaviour
     private GameObject prefab;
 
     [SerializeField]
-    private GameObject puzzlePrefab;
+    private List<GameObject> puzzlePrefab;
+
+    int currentLevel = 0;
 
     private bool active = false;
+
+    bool activeRoutine = false;
+
+    Coroutine routine;
 
     private GameObject game;
 
     private void Update()
     {
+        if (game != null)
+        {
+            bool levelDone = game.GetComponent<GameChecker>().LevelDone;
+
+            if (levelDone && activeRoutine == false && (currentLevel == 1 || currentLevel == 2))
+            {
+                routine = StartCoroutine(RemoveGameAfterWin());
+            }
+
+            else if (levelDone && currentLevel == 3) 
+            {
+                Debug.Log("You Win");
+            }
+        }
+
         if (Input.GetKey(KeyCode.E))
         {
             if (!active) 
@@ -34,7 +55,7 @@ public class Test : MonoBehaviour
 
                 active = false;
 
-                game = Instantiate (puzzlePrefab);
+                game = Instantiate(puzzlePrefab[currentLevel - 1]);
 
                 active = true;
             }
@@ -44,7 +65,9 @@ public class Test : MonoBehaviour
         {
             if(!active)
             {
-                game = Instantiate(puzzlePrefab);
+                game = Instantiate(puzzlePrefab[currentLevel]);
+
+                currentLevel++;
 
                 active = true;
             }
@@ -54,7 +77,34 @@ public class Test : MonoBehaviour
         {
             Destroy(game);
 
+            currentLevel = 0;
+
             active = false;
         }
+    }
+
+    private IEnumerator RemoveGameAfterWin()
+    {
+        activeRoutine = true;
+
+        while (game.transform.position.y <= 14f)
+        {
+            game.transform.position += new Vector3(0, 0.02f, 0);
+
+            yield return null;
+        }
+
+        if (game.transform.position.y >= 14f)
+        {
+            Destroy(game);
+
+            game = Instantiate(puzzlePrefab[currentLevel]);
+
+            currentLevel++;
+
+            activeRoutine = false;
+        }
+
+        yield return null;
     }
 }

@@ -34,8 +34,6 @@ public class DragAndDropPuzzles : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Target"))
         {
-            Debug.Log("www");
-
             gameObject.transform.position = other.gameObject.transform.position;
 
             //if (other.gameObject.GetComponent<DetectObject>().IsFilled && isDragging == false)

@@ -10,6 +10,12 @@ public class GameChecker : MonoBehaviour
     [SerializeField]
     private DetectObject[] places;
 
+    [SerializeField]
+    private GameObject newLevelPrefab;
+
+    private bool levelDone = false;
+
+    public bool LevelDone { get { return levelDone; } }
 
     private bool IsCorrectPosition()
     {
@@ -39,7 +45,11 @@ public class GameChecker : MonoBehaviour
 
     private void Update()
     {
-        StartCoroutine(GameWin());
+        if (levelDone == false)
+        {
+            StartCoroutine(GameWin());
+        }
+        
     }
 
     private IEnumerator GameWin()
@@ -49,12 +59,14 @@ public class GameChecker : MonoBehaviour
         {
             if (IsCorrectPosition())
             {
+                levelDone = true;
+
                 Debug.Log("You Win the Game");
             }
             
             else
             {
-                Debug.Log("Press R to restart");
+                Debug.Log("Try something else");
             }
         }
     }

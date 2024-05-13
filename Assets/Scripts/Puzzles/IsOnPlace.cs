@@ -23,11 +23,16 @@ public class IsOnPlace : MonoBehaviour
                 if (collision.gameObject.tag == gameObject.tag)
                 {
                     isCorrectPlace = true;
+
+                    Debug.Log("Is on Place");
+                }
+
+                else
+                {
+                    Debug.Log("Not in place");
                 }
             }
         }
-        
-        
     }
 
     
