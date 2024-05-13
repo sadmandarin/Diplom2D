@@ -52,7 +52,7 @@ public class Square : MonoBehaviour
         {
             for(int j = 0; j < 8; j++)
             {
-                Vector3 position = new Vector3(i - 3f, j -3.8f, -1);
+                Vector3 position = new Vector3(i - 3f, j - 3.8f, -1);
 
                 GameObject clone = Instantiate(prefab, position, Quaternion.identity);
 
