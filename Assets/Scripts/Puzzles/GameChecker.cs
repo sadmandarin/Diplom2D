@@ -8,14 +8,28 @@ public class GameChecker : MonoBehaviour
     private IsOnPlace[] puzzles;
 
     [SerializeField]
+    private List<GameObject> puzzle1;
+
+    [SerializeField]
     private DetectObject[] places;
+
+    [SerializeField] private List<GameObject> connect;
+
+    [SerializeField]
+    private List<GameObject> placeList;
 
     [SerializeField]
     private GameObject newLevelPrefab;
 
+    private bool outPuzzle = false;
+
     private bool levelDone = false;
 
+    private bool isPuzzleOut = false;
+
     public bool LevelDone { get { return levelDone; } }
+
+    public bool IsPuzzleOut { get {  return isPuzzleOut; } }
 
     private bool IsCorrectPosition()
     {
@@ -55,11 +69,32 @@ public class GameChecker : MonoBehaviour
     private IEnumerator GameWin()
     {
         yield return new WaitForSeconds(1);
+
         if (IsFullFilled()) 
         {
-            if (IsCorrectPosition())
+            if (IsCorrectPosition() && !outPuzzle)
             {
                 levelDone = true;
+
+                outPuzzle = true;
+
+                foreach (GameObject obj in placeList)
+                {
+                    obj.SetActive(false);
+                }
+
+                foreach (GameObject obj in connect)
+                {
+                    obj.SetActive(false);
+
+                    yield return new WaitForSeconds(0.3f);
+                }   
+
+                RemovePuzzles();
+
+                newLevelPrefab.SetActive(false);
+
+                   
 
                 Debug.Log("You Win the Game");
             }
@@ -68,6 +103,39 @@ public class GameChecker : MonoBehaviour
             {
                 Debug.Log("Try something else");
             }
+        }
+    }
+
+    void RemovePuzzles()
+    {
+        
+        foreach (var puzzle in puzzle1)
+        {
+            Debug.Log("КОрутина рабоатет");
+
+            StartCoroutine(RemovePuzzle(puzzle));
+        }
+        
+        
+    }
+
+    IEnumerator RemovePuzzle(GameObject puzzle)
+    {
+        yield return new WaitForSeconds(0.7f);
+
+        while (puzzle.transform.position.y < 14f)
+        {
+            puzzle.GetComponent<CircleCollider2D>().enabled = false;
+
+            puzzle.transform.position += new Vector3(0, 0.04f, 0);
+
+            yield return null;
+        }
+
+        if (puzzle.transform.position.y >= 14)
+        {
+            isPuzzleOut = true;
+
         }
     }
 }

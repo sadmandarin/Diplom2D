@@ -29,8 +29,11 @@ public class DetectObject : MonoBehaviour
 
             objectTag = collision.gameObject.tag;
         }
-
-        isFilled = true;
+        if (fillObj.GetComponent<DragAndDropPuzzles>().IsDragging == false)
+        {
+            isFilled = true;
+        }
+        
 
         
     }

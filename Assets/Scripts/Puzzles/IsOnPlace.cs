@@ -22,9 +22,15 @@ public class IsOnPlace : MonoBehaviour
             {
                 if (collision.gameObject.tag == gameObject.tag)
                 {
-                    isCorrectPlace = true;
+                    if(gameObject.GetComponent<DragAndDropPuzzles>().IsDragging == false)
+                    {
+                        isCorrectPlace = true;
 
-                    Debug.Log("Is on Place");
+                        Debug.Log("Is on Place");
+                    }
+                    
+
+                    
                 }
 
                 else

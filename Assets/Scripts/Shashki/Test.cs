@@ -26,14 +26,22 @@ public class Test : MonoBehaviour
         {
             bool levelDone = game.GetComponent<GameChecker>().LevelDone;
 
+            bool isPuzzleOut = game.GetComponent<GameChecker>().IsPuzzleOut;
+
             if (levelDone && activeRoutine == false && (currentLevel == 1 || currentLevel == 2))
             {
-                routine = StartCoroutine(RemoveGameAfterWin());
+                if (isPuzzleOut)
+                {
+                    routine = StartCoroutine(RemoveGameAfterWin());
+                }
+                
             }
 
             else if (levelDone && currentLevel == 3) 
             {
                 Debug.Log("You Win");
+
+                Destroy(game);
             }
         }
 
@@ -87,23 +95,14 @@ public class Test : MonoBehaviour
     {
         activeRoutine = true;
 
-        while (game.transform.position.y <= 14f)
-        {
-            game.transform.position += new Vector3(0, 0.02f, 0);
+        Destroy(game);
 
-            yield return null;
-        }
+        game = Instantiate(puzzlePrefab[currentLevel]);
 
-        if (game.transform.position.y >= 14f)
-        {
-            Destroy(game);
+        currentLevel++;
 
-            game = Instantiate(puzzlePrefab[currentLevel]);
-
-            currentLevel++;
-
-            activeRoutine = false;
-        }
+        activeRoutine = false;
+        
 
         yield return null;
     }
