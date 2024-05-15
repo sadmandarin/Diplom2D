@@ -87,7 +87,7 @@ public class GameChecker : MonoBehaviour
                 {
                     obj.SetActive(false);
 
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.25f);
                 }   
 
                 RemovePuzzles();

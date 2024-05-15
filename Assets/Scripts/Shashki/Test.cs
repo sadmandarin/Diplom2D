@@ -28,11 +28,21 @@ public class Test : MonoBehaviour
 
             bool isPuzzleOut = game.GetComponent<GameChecker>().IsPuzzleOut;
 
-            if (levelDone && activeRoutine == false && (currentLevel == 1 || currentLevel == 2))
+            if (levelDone && activeRoutine == false)
             {
                 if (isPuzzleOut)
                 {
-                    routine = StartCoroutine(RemoveGameAfterWin());
+                    if (currentLevel == 1 || currentLevel == 2)
+                    {
+                        routine = StartCoroutine(RemoveGameAfterWin());
+                    }
+
+                    else if (currentLevel == 3)
+                    {
+                        routine = StartCoroutine(RemoveLastlvl());
+                    }
+
+                    
                 }
                 
             }
@@ -103,6 +113,15 @@ public class Test : MonoBehaviour
 
         activeRoutine = false;
         
+
+        yield return null;
+    }
+
+    private IEnumerator RemoveLastlvl()
+    {
+        activeRoutine = true;
+
+        Destroy(game);
 
         yield return null;
     }
