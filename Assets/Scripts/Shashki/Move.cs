@@ -34,6 +34,12 @@ public class Move : MonoBehaviour
 
                 Debug.Log("Движение");
             }
+            else
+            {
+                feature = square.selectedFeature;
+
+                square.selectedFeature = null;
+            }
             
         }
         else if (feature) 
@@ -47,7 +53,6 @@ public class Move : MonoBehaviour
             select = true;
 
             square.WalkController(x, y);
-
 
             select = false;
         }
