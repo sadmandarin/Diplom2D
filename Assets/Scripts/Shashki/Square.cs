@@ -169,6 +169,17 @@ public class Square : MonoBehaviour
         }
     }
 
+    public void RevertWalk(int I, int J)
+    {
+        squareArray[I, J].GetComponent<Move>().feature = selectedFeature;
+
+        selectedFeature = null;
+
+        squareArray[I, J].GetComponent<Move>().Loaded = true;
+
+        Clear();
+    }
+
     public void WalkEnemyController(Vector2Int target)
     {
         for (int i = 0; i < 8; i++)

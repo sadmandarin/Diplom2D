@@ -94,8 +94,6 @@ public class DragAndDropPuzzles : MonoBehaviour
                 Debug.Log("second");
 
                 isAttached = false;
-
-
             }
         }
     }

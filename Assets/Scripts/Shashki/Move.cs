@@ -6,6 +6,8 @@ public class Move : MonoBehaviour
 {
     public GameObject feature;
 
+    private GameObject featureClone;
+
     public Square square;
 
     public bool select;
@@ -23,13 +25,6 @@ public class Move : MonoBehaviour
         set { _loaded = value; }
     }
 
-    //private void Start()
-    //{
-    //    square = GameObject.Find("shashki").GetComponent<Square>();
-    //}
-
-    
-
     private void OnMouseDown()
     {
         if (square.selectedFeature)
@@ -40,13 +35,14 @@ public class Move : MonoBehaviour
 
                 Debug.Log("Движение");
             }
-            
         }
         else if (feature) 
         {
             square.selectedFeature = feature;
 
             Debug.Log("figura vibrana");
+
+            
 
             feature = null;
 
@@ -57,6 +53,8 @@ public class Move : MonoBehaviour
             select = false;
         }
     }
+
+    
 
     IEnumerator Moving()
     {

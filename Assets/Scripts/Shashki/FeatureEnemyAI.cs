@@ -85,5 +85,10 @@ public class FeatureEnemyAI : MonoBehaviour
         once = false;
 
         isOurChess = false;
+
+        if ((x == 0 && y == 0) || (x == 0 && y == 2) || (x == 0 && y == 4) || (x == 0 && y == 6))
+        {
+            Debug.Log("yOU wIN");
+        }
     }
 }
