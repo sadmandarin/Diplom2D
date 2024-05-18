@@ -52,7 +52,7 @@ public class Square : MonoBehaviour
         {
             for(int j = 0; j < 8; j++)
             {
-                Vector3 position = new Vector3(i - 3.58f + 0.025f*i, j - 3.59f + j * 0.025f, -1);
+                Vector3 position = new Vector3(i - 3f, j - 3.8f, -1);
 
                 GameObject clone = Instantiate(prefab, position, Quaternion.identity);
 
@@ -95,7 +95,7 @@ public class Square : MonoBehaviour
                     {
                         Vector3 pos = squareArray[i, j].transform.position;
 
-                        GameObject clone = Instantiate(players, pos + new Vector3(0.1f, 0, 0), Quaternion.identity, gameObject.transform);
+                        GameObject clone = Instantiate(players, pos, Quaternion.identity, gameObject.transform);
 
                         clone.name = "Player";
 
@@ -112,7 +112,7 @@ public class Square : MonoBehaviour
                 {
                     Vector3 pos = squareArray[i, j].transform.position;
 
-                    GameObject clone = Instantiate(enemy, pos + new Vector3(0.1f, 0, 0), Quaternion.identity, gameObject.transform);
+                    GameObject clone = Instantiate(enemy, pos, Quaternion.identity, gameObject.transform);
 
                     clone.name = "Enemy";
 

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,8 +15,6 @@ public class DragAndDropPuzzles : MonoBehaviour
     private bool isAttached = false;
 
     bool isOut = false;
-
-    bool filled;
 
     public bool IsDragging {  get { return isDragging; } }
 
@@ -52,9 +49,7 @@ public class DragAndDropPuzzles : MonoBehaviour
         isDragging = false;
         gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
 
-        
-
-         if (isAttached == false && isOut == true && filled == false)
+        if (isAttached ==false && isOut == true)
         {
             offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -65,17 +60,10 @@ public class DragAndDropPuzzles : MonoBehaviour
             transform.position = startPosition;
         }
 
-        else if (!filled && !isOut)
+        else if (isAttached)
         {
             gameObject.transform.position = endPosition;
         }
-
-        else if (!filled)
-        {
-            gameObject.transform.position = endPosition;
-        }
-
-
         else
         {
             gameObject.transform.position = startPosition;
@@ -90,8 +78,6 @@ public class DragAndDropPuzzles : MonoBehaviour
         {
             if (!other.gameObject.GetComponent<DetectObject>().IsFilled)
             {
-                filled = false;
-
                 isAttached = true;
 
                 isOut = false;
@@ -107,9 +93,9 @@ public class DragAndDropPuzzles : MonoBehaviour
             {
                 Debug.Log("second");
 
-                //isAttached = false;
+                isAttached = false;
 
-                filled = true;
+
             }
         }
     }
@@ -118,8 +104,6 @@ public class DragAndDropPuzzles : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Target") && isDragging)
         {
-
-
             isAttached = false;
 
             isOut = true;
