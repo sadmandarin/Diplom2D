@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,31 +12,78 @@ public class FeatureEnemyAI : MonoBehaviour
 
     public bool loaded;
 
-    public bool walk;
+    private bool _walk;
+
+    private GameObject target;
+
+    Coroutine _coroutine;
+
+    private bool once = false;
+
+    private bool isOurChess = false;
 
     public int x;
     public int y;
 
+    public bool IsOurChess
+    {
+        get { return isOurChess; }
+        set { isOurChess = value; }
+    }
+
+    public GameObject Target
+    {
+        get { return target; }
+        set { target = value; }
+    }
+
+    public bool Walk
+    {
+        get { return _walk; }
+        set { _walk = value; }
+    }
+
     private void Update()
     {
-        if (walk)
+        if (once == false && isOurChess == true)
         {
-            StartCoroutine(Moving());
+            StartCoroutine(square.startqueue(x, y));
+
+            once = true;
+        }
+
+        if (_walk)
+        {
+            _coroutine = StartCoroutine(Moving());
         }
         
     }
 
     IEnumerator Moving()
     {
-        GameObject objectMove = gameObject;
+        GameObject objectMove = feature;
 
-        while (Vector3.Distance(objectMove.transform.position, gameObject.transform.position) > 0.01f)
+        while (Vector3.Distance(target.transform.position, objectMove.transform.position) > 0.01f)
         {
-            objectMove.transform.position = Vector3.MoveTowards(objectMove.transform.position, transform.position, 0.1f);
+            feature.transform.position = Vector3.MoveTowards(objectMove.transform.position, target.transform.position, 0.1f);
 
-            yield return new WaitForSeconds(0.001f);
+            yield return new WaitForSeconds(0.5f);
         }
+
+        _walk = false;
+
+        square.SquareArray[x, y].GetComponent<Move>().Loaded = false;
+
+        x = target.GetComponent<Move>().x;
+
+        y = target.GetComponent<Move>().y;
+
+        square.SquareArray[x, y].GetComponent<Move>().Loaded = true;
+
+        _coroutine = null;
+
+        once = false;
+
+        isOurChess = false;
     }
-
-
 }

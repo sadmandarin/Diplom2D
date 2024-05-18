@@ -11,11 +11,17 @@ public class Move : MonoBehaviour
     public bool select;
 
     public bool walk;
-        
-    public bool loaded;
+    [SerializeField]
+    private bool _loaded;
 
     public int x;
     public int y;
+
+    public bool Loaded
+    {
+        get { return _loaded; }
+        set { _loaded = value; }
+    }
 
     //private void Start()
     //{
@@ -28,7 +34,7 @@ public class Move : MonoBehaviour
     {
         if (square.selectedFeature)
         {
-            if (walk && !loaded)
+            if (walk && !_loaded)
             {
                 StartCoroutine(Moving());
 
@@ -48,7 +54,6 @@ public class Move : MonoBehaviour
 
             square.WalkController(x, y);
 
-
             select = false;
         }
     }
@@ -67,7 +72,7 @@ public class Move : MonoBehaviour
 
         square.selectedFeature = null;
 
-        feature.GetComponent<Move>().loaded = true;
+        square.SquareArray[x, y].GetComponent<Move>().Loaded = true;
 
         square.Clear();
 

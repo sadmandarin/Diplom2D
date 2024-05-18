@@ -1,6 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+
+public class Vertex
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+    public int Distance { get; set; }
+    public Vertex Previous { get; set; }
+    public bool IsVisited { get; set; }
+    public bool IsOccupied { get; set; }
+
+    public Vertex(int x, int y)
+    {
+        X = x;
+        Y = y;
+        Distance = int.MaxValue;
+        Previous = null;
+        IsVisited = false;
+        IsOccupied = false;
+    }
+}
 
 public class Square : MonoBehaviour
 {
@@ -15,35 +36,27 @@ public class Square : MonoBehaviour
     [SerializeField]
     private GameObject enemy;
 
+    private int pathLenght = 32132121;
+
     public GameObject selectedFeature;
+
+    private List<Vector2Int> targets = new List<Vector2Int>();
+
+    public GameObject[,] SquareArray
+    {
+        get { return squareArray; }
+    }
 
     private void Start()
     {
         squareArray = new GameObject[8, 8];
 
         CreateField();
-    }
 
-    private void Update()
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                if ((i + j) % 2 == 0)
-                {
-                    if (squareArray[i, j].GetComponent<Move>().feature != null)
-                    {
-                        squareArray[i, j].GetComponent<Move>().loaded = true;
-                    }
-
-                    else
-                    {
-                        squareArray[i, j].GetComponent<Move>().loaded = false;
-                    }
-                }
-            }
-        }
+        targets.Add(new Vector2Int(0, 0));
+        targets.Add(new Vector2Int(0, 2));
+        targets.Add(new Vector2Int(0, 4));
+        targets.Add(new Vector2Int(0, 6));
     }
 
     void CreateField()
@@ -52,9 +65,9 @@ public class Square : MonoBehaviour
         {
             for(int j = 0; j < 8; j++)
             {
-                Vector3 position = new Vector3(i - 3f, j - 3.8f, -1);
+                Vector3 position = new Vector3(i - 3 + 0.025f * i, j - 3.8f + 0.025f * j, -1);
 
-                GameObject clone = Instantiate(prefab, position, Quaternion.identity);
+                GameObject clone = Instantiate(prefab, position + new Vector3(0.1f, 0, 0), Quaternion.identity);
 
                 squareArray[i, j] = clone;
 
@@ -101,7 +114,7 @@ public class Square : MonoBehaviour
 
                         squareArray[i, j].GetComponent<Move>().feature = clone;
 
-                        squareArray[i, j].GetComponent<Move>().loaded = true;
+                        squareArray[i, j].GetComponent<Move>().Loaded = true;
                     }
 
                 }
@@ -118,7 +131,7 @@ public class Square : MonoBehaviour
 
                     squareArray[i, j].GetComponent <FeatureEnemyAI>().feature = clone;
 
-                    squareArray[i, j].GetComponent<FeatureEnemyAI>().loaded = true;
+                    squareArray[i, j].GetComponent<Move>().Loaded = true;
                 }
             }
         }
@@ -138,11 +151,13 @@ public class Square : MonoBehaviour
                         {
                             if(I - i == -1)
                             {
-                                if (!squareArray[i,j].GetComponent<Move>().loaded)
+                                if (!squareArray[i,j].GetComponent<Move>().Loaded)
                                 {
-                                    squareArray[i, j].GetComponent<SpriteRenderer>().enabled = true;
+                                    squareArray[i, j].GetComponentInChildren<SpriteRenderer>().enabled = true;
 
                                     squareArray[i, j].GetComponent<Move>().walk = true;
+
+                                    squareArray[I, J].GetComponent<Move>().Loaded = false;
                                 }
                             }
                         }
@@ -154,7 +169,7 @@ public class Square : MonoBehaviour
         }
     }
 
-    public void WalkEnemyController(int I, int J)
+    public void WalkEnemyController(Vector2Int target)
     {
         for (int i = 0; i < 8; i++)
         {
@@ -164,29 +179,129 @@ public class Square : MonoBehaviour
                 {
                     if (squareArray[i, j].GetComponent<Move>())
                     {
-                        if (!squareArray[i, j].GetComponent<Move>().select)
-                        {
-                            if ((J - j == -1 || J - j == 1))
-                            {
-                                if (I - i == -1 && I - i == 1)
-                                {
-                                    if (!squareArray[i, j].GetComponent<Move>().loaded)
-                                    {
-                                        squareArray[i, j].GetComponent<SpriteRenderer>().enabled = true;
+                        squareArray[i, j].GetComponent<FeatureEnemyAI>().Walk = true;
 
-                                        squareArray[i, j].GetComponent<FeatureEnemyAI>().walk = true;
+                        squareArray[i, j].GetComponent <FeatureEnemyAI>().Target = squareArray[target.x, target.y];
+
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    private List<Vector2Int> Dijkstra(int startI, int startJ, List<Vector2Int> targets)
+    {
+        Vertex[,] vertex = new Vertex[8, 8];
+        
+        for (int i = 0;i < 8; i++)
+        {
+            for(int j = 0; j < 8; j++)
+            {
+                if ((i + j) % 2 == 0)
+                {
+                    vertex[i, j] = new Vertex(i, j);
+
+                    if (squareArray[i, j].GetComponent<Move>().Loaded)
+                    {
+                        vertex[i, j].IsOccupied = true;
+                    }
+                }
+                
+            }
+        }
+
+        Queue<Vertex> queue = new Queue<Vertex>();
+
+        vertex[startI, startJ].Distance = 0;
+
+        queue.Enqueue(vertex[startI, startJ]);
+        
+        while (queue.Count > 0)
+        {
+            Vertex current = queue.Dequeue();
+
+            current.IsVisited = true;
+
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                for (int dy = -1; dy <= 1; dy++)
+                {
+                    if (dx != 0 || dy != 0)
+                    {
+                        int newX = current.X + dx;
+                        int newY = current.Y + dy;
+
+                        if ((newX + newY) % 2 == 0)
+                        {
+                            if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8)
+                            {
+                                Vertex neighbour = vertex[newX, newY];
+
+                                if (!neighbour.IsOccupied && !neighbour.IsVisited)
+                                {
+                                    int newDistance = current.Distance + 1;
+
+                                    if (newDistance < neighbour.Distance)
+                                    {
+                                        neighbour.Distance = newDistance;
+                                        neighbour.Previous = current;
+                                        queue.Enqueue(neighbour);
                                     }
                                 }
                             }
                         }
-
                     }
                 }
-                
+            }
+
+
+        }
+
+        List<Vector2Int> shortestPath = null;
+
+        int shortestDistance = int.MaxValue;
+
+        foreach (var target in targets)
+        {
+            Vertex current = vertex[target.x, target.y];
+            if (current.Distance < shortestDistance)
+            {
+                shortestDistance = current.Distance;
+                shortestPath = new List<Vector2Int>();
+                while (current != null)
+                {
+                    shortestPath.Add(new Vector2Int(current.X, current.Y));
+                    current = current.Previous;
+                }
+            }
+            else if (current.Distance == shortestDistance)
+            {
 
             }
         }
+
+        if (shortestPath == null)
+        {
+            return new List<Vector2Int>();
+        }
+
+        shortestPath.Reverse();
+
+        if (shortestPath.Count == 1)
+        {
+            shortestPath.Clear();
+        }
+
+        foreach (var item in shortestPath)
+        {
+            Debug.Log(item);
+        }
+
+        return shortestPath;
     }
+
+
 
     public void Clear()
     {
@@ -198,33 +313,71 @@ public class Square : MonoBehaviour
                 {
                     if (!squareArray[i, j].GetComponent<Move>().select)
                     {
-                        squareArray[i, j].GetComponent<SpriteRenderer>().enabled = false;
+                        squareArray[i, j].GetComponentInChildren<SpriteRenderer>().enabled = false;
 
-                        squareArray[i, j].GetComponent<Move>().walk = false;          
+                        squareArray[i, j].GetComponent<Move>().walk = false;
                     }
 
                 }
 
+                if (squareArray[i, j].GetComponent<FeatureEnemyAI>())
+                {
+                    squareArray[i, j].GetComponent<FeatureEnemyAI>().IsOurChess = true;
+                }
+
             }
+
+
         }
     }
 
+    void IfNoPathFound(int I, int J)
+    {
+        List<Vector2Int> posiblePoints = new List<Vector2Int>();
 
-    //public void ClearField()
-    //{
-    //    for (int i = 0; i < 8; i++)
-    //    {
-    //        for (int j = 0; j < 8; j++)
-    //        {
-    //            if (squareArray[i, j].GetComponent<Move>())
-    //            {
-    //                squareArray[i, j].GetComponent<Move>().select = false;
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                if (dx != 0 || dy != 0)
+                {
+                    int newX = I + dx;
+                    int newY = J + dy;
 
-    //                squareArray[i, j].GetComponent<Move>().walk = false;
-    //            }
+                    if ((newX + newY) % 2 == 0)
+                    {
+                        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8)
+                        {
+                            posiblePoints.Add(new Vector2Int(newX, newY));
+                        }
+                    }
+                }
+            }
+        }
+        if (posiblePoints.Count != 0)
+        {
 
-    //        }
-    //    }
-    //    StepController();
-    //}
+
+            WalkEnemyController(posiblePoints[Random.Range(0, posiblePoints.Count)]);
+        }
+    }
+
+ public IEnumerator startqueue(int i, int j)
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        List<Vector2Int> path = Dijkstra(i, j, targets);
+
+        if (path.Count != 0)
+        {
+            WalkEnemyController(path[1]);
+        }
+
+        else
+        {
+            IfNoPathFound(i, j);
+        }
+        
+    }
+
 }
