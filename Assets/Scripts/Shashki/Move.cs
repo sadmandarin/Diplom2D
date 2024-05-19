@@ -36,7 +36,7 @@ public class Move : MonoBehaviour
                 Debug.Log("Движение");
             }
         }
-        else if (feature) 
+        else if (feature && square.step == true) 
         {
             square.selectedFeature = feature;
 
@@ -71,6 +71,8 @@ public class Move : MonoBehaviour
         square.selectedFeature = null;
 
         square.SquareArray[x, y].GetComponent<Move>().Loaded = true;
+
+        square.step = false;
 
         square.Clear();
 

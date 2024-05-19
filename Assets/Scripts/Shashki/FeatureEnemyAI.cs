@@ -52,7 +52,7 @@ public class FeatureEnemyAI : MonoBehaviour
             once = true;
         }
 
-        if (_walk)
+        if (_walk && square.step == false)
         {
             _coroutine = StartCoroutine(Moving());
         }
@@ -83,6 +83,8 @@ public class FeatureEnemyAI : MonoBehaviour
         _coroutine = null;
 
         once = false;
+
+        square.step = true;
 
         isOurChess = false;
 
