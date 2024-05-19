@@ -36,6 +36,8 @@ public class Square : MonoBehaviour
     [SerializeField]
     private GameObject enemy;
 
+    public bool step = true;
+
     private int pathLenght = 32132121;
 
     public GameObject selectedFeature;
@@ -65,7 +67,7 @@ public class Square : MonoBehaviour
         {
             for(int j = 0; j < 8; j++)
             {
-                Vector3 position = new Vector3(i - 3 + 0.025f * i, j - 3.8f + 0.025f * j, -1);
+                Vector3 position = new Vector3(i - 7.9f + 0.052f * i, j - 3.7f + 0.043f * j, -1);
 
                 GameObject clone = Instantiate(prefab, position + new Vector3(0.1f, 0, 0), Quaternion.identity);
 
@@ -167,6 +169,17 @@ public class Square : MonoBehaviour
 
             }
         }
+    }
+
+    public void RevertWalk(int I, int J)
+    {
+        squareArray[I, J].GetComponent<Move>().feature = selectedFeature;
+
+        selectedFeature = null;
+
+        squareArray[I, J].GetComponent<Move>().Loaded = true;
+
+        Clear();
     }
 
     public void WalkEnemyController(Vector2Int target)
