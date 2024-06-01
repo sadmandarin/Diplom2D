@@ -12,6 +12,9 @@ TagManager:
   - Three-One
   - Three-Two
   - Three-Three
+  - NonPlayer
+  - NonGhost
+  - Enemy
   layers:
   - Default
   - TransparentFX

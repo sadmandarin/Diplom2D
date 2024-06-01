@@ -19,6 +19,12 @@ public class GameChecker : MonoBehaviour
     private List<GameObject> placeList;
 
     [SerializeField]
+    private GameData gameData;
+
+    [SerializeField]
+    private int level;
+
+    [SerializeField]
     private GameObject newLevelPrefab;
 
     private bool outPuzzle = false;
@@ -26,6 +32,11 @@ public class GameChecker : MonoBehaviour
     private bool levelDone = false;
 
     private bool isPuzzleOut = false;
+
+    public int Level
+    {
+        get { return level; }
+    }
 
     public bool LevelDone { get { return levelDone; } }
 
@@ -92,11 +103,13 @@ public class GameChecker : MonoBehaviour
 
                 RemovePuzzles();
 
-                newLevelPrefab.SetActive(false);
+                //newLevelPrefab.SetActive(false);
 
-                   
+                gameData.CompleteMiniGame1(1, true);
 
                 Debug.Log("You Win the Game");
+
+                //Instantiate(newLevelPrefab);
             }
             
             else
@@ -108,7 +121,6 @@ public class GameChecker : MonoBehaviour
 
     void RemovePuzzles()
     {
-        
         foreach (var puzzle in puzzle1)
         {
             Debug.Log("КОрутина рабоатет");
@@ -123,7 +135,7 @@ public class GameChecker : MonoBehaviour
     {
         yield return new WaitForSeconds(0.7f);
 
-        while (puzzle.transform.position.y < 14f)
+        while (puzzle.transform.position.y < 15f)
         {
             puzzle.GetComponent<CircleCollider2D>().enabled = false;
 
@@ -132,7 +144,7 @@ public class GameChecker : MonoBehaviour
             yield return null;
         }
 
-        if (puzzle.transform.position.y >= 14)
+        if (puzzle.transform.position.y >= 15)
         {
             isPuzzleOut = true;
 

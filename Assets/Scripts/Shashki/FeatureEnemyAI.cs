@@ -8,9 +8,17 @@ public class FeatureEnemyAI : MonoBehaviour
 {
     public GameObject feature;
 
+    [SerializeField]
+    private GameObject win;
+
+    [SerializeField]
+    private GameObject lose;
+
     public Square square;
 
     public bool loaded;
+
+    public GameData gameData;
 
     private bool _walk;
 
@@ -21,6 +29,8 @@ public class FeatureEnemyAI : MonoBehaviour
     private bool once = false;
 
     private bool isOurChess = false;
+
+    private bool isLose = false;
 
     public int x;
     public int y;
@@ -41,6 +51,21 @@ public class FeatureEnemyAI : MonoBehaviour
     {
         get { return _walk; }
         set { _walk = value; }
+    }
+
+    public GameObject Win
+    {
+        get { return win; }
+    }
+
+    public GameObject Lose
+    {
+        get { return lose; }
+    }
+
+    public GameData GameData
+    {
+        get { return gameData; }
     }
 
     private void Update()
@@ -88,9 +113,19 @@ public class FeatureEnemyAI : MonoBehaviour
 
         isOurChess = false;
 
+        Vertex vertex = new Vertex(x, y);
+
         if ((x == 0 && y == 0) || (x == 0 && y == 2) || (x == 0 && y == 4) || (x == 0 && y == 6))
         {
-            Debug.Log("yOU wIN");
+            if (isLose == false)
+            {
+                Debug.Log("You Lose");
+
+                Instantiate(GameObject.FindGameObjectsWithTag("Enemy")[0].GetComponent<FeatureEnemyAI>().Lose, GameObject.FindGameObjectsWithTag("Enemy")[0].transform.position, Quaternion.identity);
+            }
+            isLose = true;
         }
+
+        
     }
 }

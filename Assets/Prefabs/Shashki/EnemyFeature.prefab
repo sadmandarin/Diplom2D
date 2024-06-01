@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8696610872424734081}
   m_Layer: 0
   m_Name: EnemyFeature
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feature: {fileID: 3615311393377873767}
+  win: {fileID: 2072995421202572752, guid: 6940220e912ef4d47a2e0603431eaeba, type: 3}
+  lose: {fileID: 325019845005022964, guid: 673ed653871e2764298965a06e6140cd, type: 3}
   square: {fileID: 0}
   loaded: 0
+  gameData: {fileID: 11400000, guid: 1bf09e7595c601a44a5a827c6a68e1b6, type: 2}
   x: 0
   y: 0

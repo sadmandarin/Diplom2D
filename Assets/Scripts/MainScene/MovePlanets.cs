@@ -25,7 +25,7 @@ public class MovePlanets : MonoBehaviour
             
             if (up)
             {
-                transform.position += new Vector3(0, 0.003f, 0);
+                transform.position += new Vector3(0, 0.05f, 0) * Time.deltaTime;
                 if ((transform.position.y - startPos.y) >= 0.25f)
                 {
                     up = false;
@@ -34,7 +34,7 @@ public class MovePlanets : MonoBehaviour
 
             else
             {
-                transform.position -= new Vector3(0, 0.003f, 0);
+                transform.position -= new Vector3(0, 0.05f, 0) * Time.deltaTime;
 
                 if ((transform.position.y - startPos.y) <= -0.25f)
                 {

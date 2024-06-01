@@ -10,7 +10,7 @@ public class Test : MonoBehaviour
     [SerializeField]
     private List<GameObject> puzzlePrefab;
 
-    int currentLevel = 0;
+    int currentLevel = 1;
 
     private bool active = false;
 
@@ -18,88 +18,56 @@ public class Test : MonoBehaviour
 
     Coroutine routine;
 
-    private GameObject game;
+    public GGMove ggmove;
+
+    public GameObject game;
+
+    [SerializeField]
+    private Data data;
 
     private void Update()
     {
-        if (game != null)
+        if(game != null)
         {
-            bool levelDone = game.GetComponent<GameChecker>().LevelDone;
-
-            bool isPuzzleOut = game.GetComponent<GameChecker>().IsPuzzleOut;
-
-            if (levelDone && activeRoutine == false)
+            if (game.GetComponent<GameChecker>())
             {
-                if (isPuzzleOut)
+                bool levelDone = game.GetComponent<GameChecker>().LevelDone;
+
+                bool isPuzzleOut = game.GetComponent<GameChecker>().IsPuzzleOut;
+
+                if (levelDone && activeRoutine == false)
                 {
-                    if (currentLevel == 1 || currentLevel == 2)
+                    if (isPuzzleOut)
                     {
-                        routine = StartCoroutine(RemoveGameAfterWin());
+                        if (currentLevel == 1 || currentLevel == 2)
+                        {
+                            routine = StartCoroutine(RemoveGameAfterWin());
+                        }
+
+                        else if (currentLevel == 3)
+                        {
+                            routine = StartCoroutine(RemoveLastlvl());
+                        }
+
+
                     }
 
-                    else if (currentLevel == 3)
-                    {
-                        routine = StartCoroutine(RemoveLastlvl());
-                    }
-
-                    
                 }
-                
-            }
 
-            else if (levelDone && currentLevel == 3) 
-            {
-                Debug.Log("You Win");
+                else if (levelDone && currentLevel == 3)
+                {
+                    Debug.Log("You Win");
 
-                Destroy(game);
+                    Destroy(game);
+                }
             }
+            
         }
 
-        if (Input.GetKey(KeyCode.E))
-        {
-            if (!active) 
-            {
-                game = Instantiate(prefab);
-
-                active = true;
-            }
-        }
-
-        if (Input.GetKey(KeyCode.R))
-        {
-            if (active)
-            {
-                Destroy(game);
-
-                active = false;
-
-                game = Instantiate(puzzlePrefab[currentLevel - 1]);
-
-                active = true;
-            }
-        }
-
-        if (Input.GetKey(KeyCode.P)) 
-        {
-            if(!active)
-            {
-                game = Instantiate(puzzlePrefab[currentLevel]);
-
-                currentLevel++;
-
-                active = true;
-            }
-        }
-
-        if (Input.GetKey(KeyCode.Escape)) 
-        {
-            Destroy(game);
-
-            currentLevel = 0;
-
-            active = false;
-        }
+            
+        
     }
+
 
     private IEnumerator RemoveGameAfterWin()
     {
@@ -122,6 +90,8 @@ public class Test : MonoBehaviour
         activeRoutine = true;
 
         Destroy(game);
+
+        ggmove.isMiniGameRunning = false;
 
         yield return null;
     }
