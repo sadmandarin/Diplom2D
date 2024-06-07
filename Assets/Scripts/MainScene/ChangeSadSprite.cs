@@ -18,6 +18,8 @@ public class ChangeSadSprite : MonoBehaviour
         if (gameData.Games[2] == true)
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = happy;
+
+            gameObject.transform.position = new Vector3(transform.position.x, 0.3f, transform.position.z);
         }
 
         else

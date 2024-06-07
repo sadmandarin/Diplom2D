@@ -541,7 +541,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 4e1a560ffcf257b42963350aeed1f107, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1858,6 +1858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghost: {fileID: 6319213215599895352}
+  game: {fileID: 3081825706669789309}
   targetSprite: {fileID: 621671499876968570}
   _currentNode: {fileID: 5748663151747641724}
 --- !u!114 &5147061874058990359
@@ -1876,7 +1877,7 @@ MonoBehaviour:
   currentLvl: 1
   targetOfGame: {fileID: 5436458549524136780}
   star: {fileID: 5804355313053355213}
-  gameData: {fileID: 0}
+  gameData: {fileID: 11400000, guid: 1bf09e7595c601a44a5a827c6a68e1b6, type: 2}
 --- !u!1 &3153890493241457540
 GameObject:
   m_ObjectHideFlags: 0

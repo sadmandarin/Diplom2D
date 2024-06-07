@@ -92,6 +92,8 @@ public class GameController : MonoBehaviour
 
             GameObject.Find("девочка").GetComponent<GGMove>().isMiniGameRunning = false;
 
+            GameObject.Find("девочка").gameObject.transform.position = new Vector3(-9.13f, -1.9f, 1);
+
         }
     }
 }

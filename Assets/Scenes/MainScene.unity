@@ -156,7 +156,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1451825994}
   - {fileID: 436026627}
   m_Father: {fileID: 1741406823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -317,7 +316,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 338360917}
-  - component: {fileID: 338360918}
   - component: {fileID: 338360919}
   - component: {fileID: 338360920}
   - component: {fileID: 338360921}
@@ -343,18 +341,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &338360918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338360915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d398470d035bddd48901bfeb92ab5a78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &338360919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,7 +502,8 @@ Transform:
   m_LocalPosition: {x: -3.81, y: 2.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1451825994}
   m_Father: {fileID: 109772872}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &436026628
@@ -812,6 +799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystals: {fileID: 1895875963}
   go: {fileID: 3081825706669789309, guid: 7b9514a8b90e438488f6bf9e140c58aa, type: 3}
+  isActive: 0
   move: {fileID: 9031487679695756178}
 --- !u!1 &700189387
 GameObject:
@@ -1141,7 +1129,7 @@ MonoBehaviour:
   game: {fileID: 0}
   data:
     position: {x: 0, y: 0, z: 0}
-    gameData: {fileID: 0}
+    gameData: {fileID: 11400000, guid: 1bf09e7595c601a44a5a827c6a68e1b6, type: 2}
     rotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &772910513
 MonoBehaviour:
@@ -2035,7 +2023,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4e8ddb89610fbbd4cbc8f0628d698ce3, type: 3}
   completedGameDialog: []
   completedPlayerDialog: []
-  gameData: {fileID: 0}
+  gameData: {fileID: 11400000, guid: 1bf09e7595c601a44a5a827c6a68e1b6, type: 2}
   numberOfGame: 0
 --- !u!61 &1333716397
 BoxCollider2D:
@@ -2464,11 +2452,11 @@ Transform:
   m_GameObject: {fileID: 1451825993}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.49, y: 1.89, z: 0}
+  m_LocalPosition: {x: 0.32000017, y: -0.7600001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 109772872}
+  m_Father: {fileID: 436026627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1451825995
 SpriteRenderer:

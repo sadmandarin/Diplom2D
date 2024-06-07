@@ -10,10 +10,18 @@ public class GoCristals : MonoBehaviour
 
     [SerializeField]
     private GameObject go;
+
+    [SerializeField]
     private bool isActive = false;
 
     [SerializeField]
     private GGMove move;
+
+    public bool IsActive
+    {
+        get { return isActive; }
+        set { IsActive = value; }
+    }
 
     private void Update()
     {
@@ -57,5 +65,14 @@ public class GoCristals : MonoBehaviour
         move.isMiniGameRunning = true;
 
         isActive = true;
+
+        StartCoroutine(SetNonActive());
+    }
+
+    IEnumerator SetNonActive()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        isActive = false;
     }
 }

@@ -7,6 +7,11 @@ public class Detection : MonoBehaviour
     private GameObject ghost;
 
     [SerializeField]
+    private GameObject game;
+
+    private ReloadGhostGame reload;
+
+    [SerializeField]
     private GameObject targetSprite;
 
     [SerializeField]
@@ -18,7 +23,10 @@ public class Detection : MonoBehaviour
 
     bool isActive = false;
 
-    
+    private void Start()
+    {
+        reload = GameObject.Find("Controller").GetComponent<ReloadGhostGame>();
+    }
 
     private void Update()
     {
@@ -49,7 +57,7 @@ public class Detection : MonoBehaviour
                 {
                     Debug.Log("Game Over");
 
-                    Destroy(gameObject);
+                    reload.ReloadAssets(game, game.GetComponent<GameController>().CurrentLvl);
                 }
 
                 else if (path.Count > 1 && gameObject.GetComponent<GameController>().Coroutine == null)

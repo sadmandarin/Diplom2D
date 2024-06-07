@@ -6,6 +6,11 @@ using UnityEngine.PlayerLoop;
 
 public class FeatureEnemyAI : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject game;
+
+    private ReloadShashki reload;
+
     public GameObject feature;
 
     [SerializeField]
@@ -67,6 +72,12 @@ public class FeatureEnemyAI : MonoBehaviour
     {
         get { return gameData; }
     }
+    private void Start()
+    {
+        reload = GameObject.Find("Controller").GetComponent<ReloadShashki>();
+
+        game = GameObject.Find("Shashki(Clone)").gameObject;
+    }
 
     private void Update()
     {
@@ -121,11 +132,24 @@ public class FeatureEnemyAI : MonoBehaviour
             {
                 Debug.Log("You Lose");
 
-                Instantiate(GameObject.FindGameObjectsWithTag("Enemy")[0].GetComponent<FeatureEnemyAI>().Lose, GameObject.FindGameObjectsWithTag("Enemy")[0].transform.position, Quaternion.identity);
+                GameObject lose = Instantiate(GameObject.FindGameObjectsWithTag("Enemy")[0].GetComponent<FeatureEnemyAI>().Lose, GameObject.FindGameObjectsWithTag("Enemy")[0].transform.position, Quaternion.identity);
+
+                StartCoroutine(Restart(lose));
             }
             isLose = true;
+
+            
         }
 
         
+    }
+
+    IEnumerator Restart(GameObject lose)
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        Destroy(lose);
+
+        reload.ReloadAssets(game);
     }
 }
