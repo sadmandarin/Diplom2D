@@ -36,6 +36,14 @@ public class Square : MonoBehaviour
     public GameObject selectedFeature;
     private List<Vector2Int> targets = new List<Vector2Int>();
 
+    public AudioClip clip;
+
+    public AudioClip loseClip;
+
+    public AudioClip winClip;
+
+    private AudioSource source;
+
     [SerializeField]
     private GameObject game;
 
@@ -46,6 +54,8 @@ public class Square : MonoBehaviour
 
     private void Awake()
     {
+        source = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
         squareArray = new GameObject[8, 8];
         CreateField();
         targets.Add(new Vector2Int(0, 0));
@@ -353,6 +363,8 @@ public class Square : MonoBehaviour
 
     IEnumerator WinGame()
     {
+        source.PlayOneShot(winClip);
+
         GameObject win = Instantiate(GameObject.FindGameObjectsWithTag("Enemy")[0].GetComponent<FeatureEnemyAI>().Win, GameObject.FindGameObjectsWithTag("Enemy")[0].transform.position, Quaternion.identity);
 
         GameObject.FindGameObjectsWithTag("Enemy")[0].GetComponent<FeatureEnemyAI>().GameData.CompleteMiniGame1(0, true);

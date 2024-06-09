@@ -7,7 +7,7 @@ public class DragAndDropPuzzles : MonoBehaviour
 {
     private bool isDragging = false;
     private Vector3 offset;
-
+    private AudioSource source;
     private Vector3 startPosition;
 
     private Vector3 endPosition;
@@ -16,10 +16,15 @@ public class DragAndDropPuzzles : MonoBehaviour
 
     bool isOut = false;
 
+    [SerializeField]
+    AudioClip dragClip;
+
     public bool IsDragging {  get { return isDragging; } }
 
     private void Start()
     {
+        source = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
         startPosition = transform.position;
     }
 
@@ -35,6 +40,8 @@ public class DragAndDropPuzzles : MonoBehaviour
 
     void OnMouseDown()
     {
+        source.PlayOneShot(dragClip);
+
         isDragging = true;
         offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1f);

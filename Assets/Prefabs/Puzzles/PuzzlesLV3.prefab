@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!114 &6493730472358673062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!114 &1460921507421885508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,6 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!114 &6087700176515360905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,6 +1115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 0}
 --- !u!1 &3704499544172538771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1864,6 +1868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!114 &922519698941147405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2178,6 +2183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!114 &5926599725755159360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2353,6 +2359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!114 &238373421116560780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2951,6 +2958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47e6ad23b3de24ba20866e94c1a953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragClip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!114 &1267269994032257294
 MonoBehaviour:
   m_ObjectHideFlags: 0

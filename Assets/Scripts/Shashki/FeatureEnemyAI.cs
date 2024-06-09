@@ -37,6 +37,8 @@ public class FeatureEnemyAI : MonoBehaviour
 
     private bool isLose = false;
 
+    private AudioSource source;
+
     public int x;
     public int y;
 
@@ -74,6 +76,8 @@ public class FeatureEnemyAI : MonoBehaviour
     }
     private void Start()
     {
+        source = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
         reload = GameObject.Find("Controller").GetComponent<ReloadShashki>();
 
         game = GameObject.Find("Shashki(Clone)").gameObject;
@@ -131,6 +135,8 @@ public class FeatureEnemyAI : MonoBehaviour
             if (isLose == false)
             {
                 Debug.Log("You Lose");
+
+                source.PlayOneShot(square.loseClip);
 
                 GameObject lose = Instantiate(GameObject.FindGameObjectsWithTag("Enemy")[0].GetComponent<FeatureEnemyAI>().Lose, GameObject.FindGameObjectsWithTag("Enemy")[0].transform.position, Quaternion.identity);
 

@@ -671,6 +671,9 @@ MonoBehaviour:
   enemy: {fileID: 3615311393377873767, guid: fe33ca0b907ccf14f94cffa1d635579f, type: 3}
   step: 1
   selectedFeature: {fileID: 0}
+  clip: {fileID: 8300000, guid: 5dc0540115314e243bd17b5b3afec9e4, type: 3}
+  loseClip: {fileID: 8300000, guid: 883728dab3313554daedfe13d35a3342, type: 3}
+  winClip: {fileID: 8300000, guid: c1debea70cc2fbb4fb9f28e5e9453d14, type: 3}
   game: {fileID: 147175449541529611}
 --- !u!1 &4292757013745954420
 GameObject:

@@ -11,6 +11,17 @@ public class FollowNPC : MonoBehaviour
     public GameData gameData;
     public int numberOfGame;
 
+    [SerializeField]
+    private AudioSource playerAudioSource;
+
+    [SerializeField]
+    private AudioClip playerAudioClip;
+
+    private void Start()
+    {
+        //playerAudioSource = GetComponent<AudioSource>();
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -21,6 +32,8 @@ public class FollowNPC : MonoBehaviour
             // Проверяем попадание луча в коллайдер объекта
             if (hit.collider != null && hit.transform == transform)
             {
+                playerAudioSource.PlayOneShot(playerAudioClip);
+
                 OnObjectClicked();
             }
         }

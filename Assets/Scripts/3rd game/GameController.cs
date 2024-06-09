@@ -24,6 +24,11 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameData gameData;
 
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip clip;
+
     public int CurrentLvl
     {
         get { return currentLvl; }
@@ -33,6 +38,11 @@ public class GameController : MonoBehaviour
 
     public Coroutine Coroutine { get { return coroutine; } set { coroutine = value; } }
 
+
+    private void Start()
+    {
+        source = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+    }
 
     public IEnumerator MovingCharacter(GameObject player, Vector3 actualPos)
     {
@@ -45,6 +55,8 @@ public class GameController : MonoBehaviour
 
         if (targetOfGame == gameObject.GetComponent<CharacterControlelr>().CurrentNode)
         {
+            source.PlayOneShot(clip);
+
             StartCoroutine(MovingStar());
             
         }

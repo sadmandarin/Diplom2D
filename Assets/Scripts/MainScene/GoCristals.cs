@@ -17,6 +17,12 @@ public class GoCristals : MonoBehaviour
     [SerializeField]
     private GGMove move;
 
+    [SerializeField]
+    private AudioSource playerAudioSource;
+
+    [SerializeField]
+    private AudioClip playerAudioClip;
+
     public bool IsActive
     {
         get { return isActive; }
@@ -33,6 +39,8 @@ public class GoCristals : MonoBehaviour
             // Проверяем попадание луча в коллайдер объекта
             if (hit.collider != null && hit.transform == transform && isActive == false)
             {
+                playerAudioSource.PlayOneShot(playerAudioClip);
+
                 OnObjectClicked();
             }
         }

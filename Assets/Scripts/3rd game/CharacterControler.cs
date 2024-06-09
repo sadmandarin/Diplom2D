@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class CharacterControlelr : MonoBehaviour
@@ -14,12 +15,19 @@ public class CharacterControlelr : MonoBehaviour
     [SerializeField]
     private Sprite chosedNode;
 
+    AudioSource source;
+
     [SerializeField]
     private Sprite defoltNode;
+
+    [SerializeField]
+    private AudioClip clip;
 
     public Node CurrentNode { get { return currentNode; } }
     private void Start()
     {
+        source = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
         if (currentNode != null)
         {
             foreach (var item in currentNode.Neighbours)
@@ -40,6 +48,8 @@ public class CharacterControlelr : MonoBehaviour
                 Node clickedNode = hit.collider.GetComponent<Node>();
                 if (clickedNode != null && clickedNode.Neighbours.Contains(currentNode) && clickedNode.gameObject.tag != "NonPlayer")
                 {
+                    source.PlayOneShot(clip);
+
                     bool closed = false;
 
                     if ((currentNode.Lines.Contains(5) && clickedNode.Lines.Contains(5)) || (currentNode.Lines.Contains(6) && clickedNode.Lines.Contains(6)) || (currentNode.Lines.Contains(8) && clickedNode.Lines.Contains(8)))

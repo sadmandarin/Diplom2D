@@ -21,10 +21,17 @@ public class Detection : MonoBehaviour
 
     private Node _targetNode;
 
+    AudioSource _audioSource;
+
+    [SerializeField]
+    private AudioClip clip;
+
     bool isActive = false;
 
     private void Start()
     {
+        _audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
         reload = GameObject.Find("Controller").GetComponent<ReloadGhostGame>();
     }
 
@@ -55,6 +62,8 @@ public class Detection : MonoBehaviour
 
                 else if (path.Count == 1)
                 {
+                    _audioSource.PlayOneShot(clip);
+
                     Debug.Log("Game Over");
 
                     reload.ReloadAssets(game, game.GetComponent<GameController>().CurrentLvl);

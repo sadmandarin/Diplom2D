@@ -924,6 +924,7 @@ MonoBehaviour:
   game: {fileID: 2005496877263626017}
   targetSprite: {fileID: 2938619095364657537}
   _currentNode: {fileID: 7269732365645100272}
+  clip: {fileID: 8300000, guid: 883728dab3313554daedfe13d35a3342, type: 3}
 --- !u!114 &3921650899040534025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,6 +942,7 @@ MonoBehaviour:
   targetOfGame: {fileID: 1235684898905710089}
   star: {fileID: 5679823223252058184}
   gameData: {fileID: 11400000, guid: 1bf09e7595c601a44a5a827c6a68e1b6, type: 2}
+  clip: {fileID: 8300000, guid: c1debea70cc2fbb4fb9f28e5e9453d14, type: 3}
 --- !u!114 &8939881948211943733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,6 +959,7 @@ MonoBehaviour:
   player: {fileID: 460214663344753327}
   chosedNode: {fileID: 21300000, guid: f7fd26e6a1c5c5d4e98d58b32921a314, type: 3}
   defoltNode: {fileID: 1988273470, guid: 7d157666a2fb2b54a983dfd97008ba9d, type: 3}
+  clip: {fileID: 8300000, guid: eb8c51f1c73b1ce4f8bc8877dd25932b, type: 3}
 --- !u!1 &2023310725677249980
 GameObject:
   m_ObjectHideFlags: 0

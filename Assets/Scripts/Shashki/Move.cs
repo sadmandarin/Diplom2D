@@ -19,16 +19,28 @@ public class Move : MonoBehaviour
     public int x;
     public int y;
 
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip clip;
+
     public bool Loaded
     {
         get { return _loaded; }
         set { _loaded = value; }
     }
 
+    private void Start()
+    {
+        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+    }
+
     private void OnMouseDown()
     {
         if (square.selectedFeature)
         {
+            audioSource.PlayOneShot(square.clip);
+
             if (walk && !_loaded)
             {
                 StartCoroutine(Moving());
@@ -38,6 +50,8 @@ public class Move : MonoBehaviour
         }
         else if (feature && square.step == true) 
         {
+            audioSource.PlayOneShot(square.clip);
+
             square.selectedFeature = feature;
 
             Debug.Log("figura vibrana");
