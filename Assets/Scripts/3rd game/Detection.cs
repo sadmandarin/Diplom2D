@@ -6,10 +6,8 @@ public class Detection : MonoBehaviour
     [SerializeField]
     private GameObject ghost;
 
-    [SerializeField]
-    private GameObject game;
+    
 
-    private ReloadGhostGame reload;
 
     [SerializeField]
     private GameObject targetSprite;
@@ -28,11 +26,16 @@ public class Detection : MonoBehaviour
 
     bool isActive = false;
 
+    public AudioClip Clip
+    {
+        get { return clip; }
+    }
+
     private void Start()
     {
         _audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
 
-        reload = GameObject.Find("Controller").GetComponent<ReloadGhostGame>();
+        
     }
 
     private void Update()
@@ -62,11 +65,11 @@ public class Detection : MonoBehaviour
 
                 else if (path.Count == 1)
                 {
-                    _audioSource.PlayOneShot(clip);
-
-                    Debug.Log("Game Over");
-
-                    reload.ReloadAssets(game, game.GetComponent<GameController>().CurrentLvl);
+                    if (gameObject.GetComponent<GameController>().Coroutine == null)
+                    {
+                        
+                    }
+                    
                 }
 
                 else if (path.Count > 1 && gameObject.GetComponent<GameController>().Coroutine == null)
@@ -138,6 +141,8 @@ public class Detection : MonoBehaviour
         Vector3 actualPos = target.transform.position - new Vector3(0, -0.9f, 0);
 
         gameObject.GetComponent<GameController>().Coroutine = StartCoroutine(gameObject.GetComponent<GameController>().MovingCharacter(ghost, actualPos));
+
+
     }
 
 

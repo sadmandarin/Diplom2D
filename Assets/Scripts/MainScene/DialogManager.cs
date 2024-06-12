@@ -41,7 +41,7 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialog(List<Sprite> playerDialogs, List<Sprite> npcDialogs)
     {
-        if (ggmove.gameObject.transform.rotation.y == -180 || ggmove.gameObject.transform.rotation.y == 180)
+        if (ggmove.gameObject.transform.rotation.y == 1 || ggmove.gameObject.transform.rotation.y == -1)
         {
             playerDialogRenderer.flipX = true;
         }

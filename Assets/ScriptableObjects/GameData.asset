@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   games: 000000
-  isAcked: 1
+  isAcked: 0

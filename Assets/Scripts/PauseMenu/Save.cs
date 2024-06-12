@@ -23,7 +23,14 @@ public class Save : MonoBehaviour
         
         if (data != null)
         {
-            data.gameData = gameData;
+            data.isAcked = gameData.IsAcked;
+
+            for (int i = 0; i < gameData.Games.Count; i++)
+            {
+                data.games[i] = gameData.Games[i];
+            }
+
+            data.backGroundPos = SaveManager.GetBack();
 
             data.position = SaveManager.GetPosition();
 
@@ -36,7 +43,18 @@ public class Save : MonoBehaviour
 
             data.position = SaveManager.GetPosition();
 
-            data.gameData = gameData;
+            data.backGroundPos = SaveManager.GetBack();
+
+            //data.gameData = new GameData();
+
+            data.isAcked = gameData.IsAcked;
+
+            data.games = new List<bool>();
+
+            for (int i = 0; i < gameData.Games.Count; i++)
+            {
+                data.games.Add(gameData.Games[i]);
+            };
 
             data.rotation = SaveManager.GetRotation();
         }

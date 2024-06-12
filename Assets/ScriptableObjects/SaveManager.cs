@@ -9,17 +9,20 @@ public static class SaveManager
 
     static Vector3 updatedPos;
 
-    static Quaternion updatedRot;
+    static Vector3 backUpdated;
 
-    static SaveManager()
-    {
-        savePath = Path.Combine(Application.persistentDataPath, "saveData.json");
-    }
+    static Quaternion updatedRot;
 
     public static void SaveGame(Data gameData)
     {
+        savePath = Path.Combine(Application.persistentDataPath, "saveData.json");
         string json = JsonUtility.ToJson(gameData);
         File.WriteAllText(savePath, json);
+    }
+
+    public static void UpdateBack(Vector3 pos)
+    {
+        backUpdated = pos;
     }
 
     public static void UpdatePosition(Vector3 pos)
@@ -35,6 +38,11 @@ public static class SaveManager
     public static Vector3 GetPosition() 
     {
         return updatedPos;
+    }
+
+    public static Vector3 GetBack()
+    {
+        return backUpdated;
     }
 
     public static Quaternion GetRotation()

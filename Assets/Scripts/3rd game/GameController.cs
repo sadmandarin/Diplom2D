@@ -7,7 +7,16 @@ public class GameController : MonoBehaviour
 {
     private int hod = 0;
 
+    [SerializeField]
+    private GameObject game;
+
     private Coroutine coroutine;
+
+    [SerializeField]
+    private Transform girl;
+
+    [SerializeField]
+    private Transform ghost;
 
     [SerializeField]
     private GameObject nextgame;
@@ -20,6 +29,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private GameObject star;
+
+    private ReloadGhostGame reload;
 
     [SerializeField]
     private GameData gameData;
@@ -42,6 +53,8 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         source = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
+        reload = GameObject.Find("Controller").GetComponent<ReloadGhostGame>();
     }
 
     public IEnumerator MovingCharacter(GameObject player, Vector3 actualPos)
@@ -58,8 +71,17 @@ public class GameController : MonoBehaviour
             source.PlayOneShot(clip);
 
             StartCoroutine(MovingStar());
-            
         }
+
+        if (Vector3.Distance(ghost.position, girl.position) <= 0.5)
+        {
+            source.PlayOneShot(gameObject.GetComponent<Detection>().Clip);
+
+            Debug.Log("Game Over");
+
+            reload.ReloadAssets(game, game.GetComponent<GameController>().CurrentLvl);
+        }
+
 
         hod++;
 

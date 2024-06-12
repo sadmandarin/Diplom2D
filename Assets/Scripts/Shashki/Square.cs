@@ -38,6 +38,8 @@ public class Square : MonoBehaviour
 
     public AudioClip clip;
 
+    private GGMove gMove;
+
     public AudioClip loseClip;
 
     public AudioClip winClip;
@@ -55,6 +57,8 @@ public class Square : MonoBehaviour
     private void Awake()
     {
         source = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
+        gMove = GameObject.Find("девочка").GetComponent<GGMove>();
 
         squareArray = new GameObject[8, 8];
         CreateField();
@@ -370,6 +374,8 @@ public class Square : MonoBehaviour
         GameObject.FindGameObjectsWithTag("Enemy")[0].GetComponent<FeatureEnemyAI>().GameData.CompleteMiniGame1(0, true);
 
         yield return new WaitForSeconds(2);
+
+        gMove.isMiniGameRunning = false;
 
         Destroy(win);
 

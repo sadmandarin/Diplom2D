@@ -8,6 +8,9 @@ public class SaveController : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
+    private GameObject background;
+
+    [SerializeField]
     private GameData gameData;
 
     private Data currentGameData;
@@ -20,10 +23,15 @@ public class SaveController : MonoBehaviour
         {
             player.transform.position = currentGameData.position;
 
-            for (int i = 0; gameData.Games.Count > i; i++)
+            background.transform.position = currentGameData.backGroundPos;
+            
+            for (int i = 0;i < gameData.Games.Count; i++)
             {
-                gameData = currentGameData.gameData;
+                gameData.Games[i] = currentGameData.games[i];
             }
+
+            gameData.IsAcked = currentGameData.isAcked;
+            
 
             player.transform.rotation = currentGameData.rotation;
         }
@@ -36,6 +44,8 @@ public class SaveController : MonoBehaviour
 
             currentGameData.rotation = new Quaternion(0,0,0,0);
 
+            currentGameData.backGroundPos = new Vector3(-9.04f, 1.168381f, 0.03071298f);
+
             for (int i = 0; i < gameData.Games.Count; i++)
             {
                 gameData.CompleteMiniGame1(i, false);
@@ -43,7 +53,14 @@ public class SaveController : MonoBehaviour
 
             gameData.IsAcked = false;
 
-            currentGameData.gameData = gameData;
+            currentGameData.isAcked = gameData.IsAcked;
+
+            currentGameData.games = new List<bool>();
+
+            for (int i = 0;i < gameData.Games.Count;i++)
+            {
+                currentGameData.games.Add(gameData.Games[i]);
+            }
         }
     }
 
@@ -52,5 +69,7 @@ public class SaveController : MonoBehaviour
         SaveManager.UpdatePosition(player.transform.position);
 
         SaveManager.UpdateRotation(player.transform.rotation);
+
+        SaveManager.UpdateBack(background.transform.position);
     }
 }

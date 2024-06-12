@@ -104,8 +104,11 @@ public class GameChecker : MonoBehaviour
                 RemovePuzzles();
 
                 //newLevelPrefab.SetActive(false);
-
-                gameData.CompleteMiniGame1(1, true);
+                if (level == 2)
+                {
+                    gameData.CompleteMiniGame1(1, true);
+                }
+               
 
                 Debug.Log("You Win the Game");
 

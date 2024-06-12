@@ -7,7 +7,11 @@ public class Data
 {
     public Vector3 position;
 
-    public GameData gameData;
+    public Vector3 backGroundPos;
+
+    public bool isAcked;
+
+    public List<bool> games;
 
     public Quaternion rotation;
 }
